@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    public CharacterController controller;
+    private Vector3 direction;
+    public float speed = 8f;
     void Start()
     {
         
@@ -13,6 +16,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float hInput = Input.GetAxis("Horizontal");
+        direction.x = hInput * speed;
+        controller.Move(direction*Time.deltaTime);
         
     }
 }
