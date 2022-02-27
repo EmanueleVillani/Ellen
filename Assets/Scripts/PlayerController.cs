@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     public Transform grounCheck;
     public LayerMask groundLayer;
     public bool ableToMakeDoubleJump = true;
+    public Animator animator;
+    public Transform model;
 
     void Start()
     {
@@ -28,10 +30,12 @@ public class PlayerController : MonoBehaviour
         float hInput = Input.GetAxis("Horizontal");
         direction.x = hInput * speed;
         //controller.Move(direction*Time.deltaTime);
-
+        animator.SetFloat("speed", Mathf.Abs(hInput));
 
 
         bool isGrounded = Physics.CheckSphere(grounCheck.position, 0.15f, groundLayer);
+        animator.SetBool("IsGrounded", isGrounded);
+
         direction.y += gravity * Time.deltaTime;
         if (isGrounded)
         {
@@ -48,13 +52,21 @@ public class PlayerController : MonoBehaviour
                 
                 if (ableToMakeDoubleJump & Input.GetButtonDown("Jump"))
                 {
+                    animator.SetTrigger("DounbleJump");
                     Debug.Log("Jump_2");
                     direction.y = jumpForce;
                     ableToMakeDoubleJump = false;
                 }
             }
+            if(hInput != 0)
+            {
+                Quaternion newRotation = Quaternion.LookRotation(new Vector3(hInput, 0, 0));
+                model.rotation = newRotation;
+            }
              
         }
         controller.Move(direction * Time.deltaTime);
     }
+
+
 }
