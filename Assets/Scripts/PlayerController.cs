@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
+    
     public CharacterController controller;
     private Vector3 direction;
     public float speed = 8f;
+    private Vector3 starPos;
 
 
     public float jumpForce = 7;
@@ -17,15 +18,23 @@ public class PlayerController : MonoBehaviour
     public bool ableToMakeDoubleJump = true;
     public Animator animator;
     public Transform model;
+    
 
     void Start()
     {
-        
+        starPos = transform.position;
+       
     }
 
     // Update is called once per frame
     void Update()
     {
+        //if(transform.position.x > starPos.x)
+        //{
+        //    transform.position = starPos;
+        //}
+
+       
 
         float hInput = Input.GetAxis("Horizontal");
         direction.x = hInput * speed;
